@@ -24,6 +24,7 @@ async function bootstrap() {
 
   const server = new ApolloServer({
     schema,
+    introspection: true,
     formatError: (formattedError) => {
       const { extensions, ...rest } = formattedError;
 
