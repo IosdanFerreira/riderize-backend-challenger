@@ -5,4 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.redisClient = void 0;
 const ioredis_1 = __importDefault(require("ioredis"));
+if (!process.env.REDIS_URL) {
+    throw new Error("❌ Variável de ambiente REDIS_URL não definida");
+}
 exports.redisClient = new ioredis_1.default(process.env.REDIS_URL);
