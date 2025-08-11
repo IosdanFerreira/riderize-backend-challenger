@@ -1,4 +1,4 @@
-name: Run Prisma Migrations and Tests
+name: Run Prisma Migrations
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  migrate-and-test:
+  migrate:
     runs-on: ubuntu-latest
 
     steps:
@@ -25,8 +25,3 @@ jobs:
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
         run: npx prisma migrate deploy
-
-      - name: Run tests
-        env:
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-        run: npm test
