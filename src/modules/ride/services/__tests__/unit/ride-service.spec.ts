@@ -42,7 +42,14 @@ describe("RideService unit tests", () => {
       findAllWithCount: jest.fn(),
     } as any;
 
-    rideService = new RideService(rideRepository);
+    const redisClientMock = {
+      get: jest.fn(),
+      set: jest.fn(),
+      del: jest.fn(),
+      // ... outros métodos se precisar
+    };
+
+    rideService = new RideService(rideRepository, redisClientMock as any);
     jest.clearAllMocks();
   });
 
