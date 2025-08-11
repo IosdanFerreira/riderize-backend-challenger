@@ -84,8 +84,6 @@ async function bootstrap() {
     },
   });
 
-  const app = express();
-
   const { url } = await startStandaloneServer(server, {
     listen: { port: Number(process.env.PORT) },
     context: async ({ req }) => {
@@ -105,6 +103,8 @@ async function bootstrap() {
       return {};
     },
   });
+
+  console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
   console.log(`Server ready at ${url}`);
 }

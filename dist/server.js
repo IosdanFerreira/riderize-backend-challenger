@@ -8,7 +8,6 @@ const server_1 = require("@apollo/server");
 const auth_service_1 = require("./modules/auth/services/auth.service");
 const typedi_1 = __importDefault(require("typedi"));
 const schema_1 = require("./shared/graphql/schema");
-const express_1 = __importDefault(require("express"));
 const prisma_client_1 = require("./shared/lib/prisma/prisma-client");
 const redis_client_1 = require("./shared/redis/redis.client");
 const standalone_1 = require("@apollo/server/standalone");
@@ -62,7 +61,6 @@ async function bootstrap() {
             };
         },
     });
-    const app = (0, express_1.default)();
     const { url } = await (0, standalone_1.startStandaloneServer)(server, {
         listen: { port: Number(process.env.PORT) },
         context: async ({ req }) => {
@@ -80,6 +78,7 @@ async function bootstrap() {
             return {};
         },
     });
+    console.log("DATABASE_URL:", process.env.DATABASE_URL);
     console.log(`Server ready at ${url}`);
 }
 bootstrap();
