@@ -1,17 +1,9 @@
 import "reflect-metadata";
 
-import { GraphQLError, GraphQLFormattedError } from "graphql";
-
-import { ApolloError } from "apollo-server-errors";
 import { ApolloServer } from "@apollo/server";
 import { AuthService } from "./modules/auth/services/auth.service";
-import { BadUserInputExceptionFilter } from "./shared/exceptions/filters/bad-user-input.exception.filter";
 import Container from "typedi";
-import { ExceptionFilterManager } from "./shared/exceptions/exception-filter-manager";
-import Redis from "ioredis";
-import { ValidationExceptionFilter } from "./shared/exceptions/filters/validation-exception-filter";
 import { createSchema } from "./shared/graphql/schema";
-import express from "express";
 import { prismaClient } from "./shared/lib/prisma/prisma-client";
 import { redisClient } from "./shared/redis/redis.client";
 import { startStandaloneServer } from "@apollo/server/standalone";
@@ -103,8 +95,6 @@ async function bootstrap() {
       return {};
     },
   });
-
-  console.log("DATABASE_URL:", process.env.DATABASE_URL);
 
   console.log(`Server ready at ${url}`);
 }
