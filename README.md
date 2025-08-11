@@ -28,6 +28,7 @@ Este repositório contém a implementação da minha solução para o desafio t�
 - Validação para impedir inscrição após prazo final
 - Cache das consultas de listagem de pedais usando Redis
 - Autenticação via JWT em todas as requisições GraphQL
+- Implementação de pipeline CI/CD para garantir a qualidade e consistência no deploy
 
 ---
 
