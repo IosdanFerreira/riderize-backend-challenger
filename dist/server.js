@@ -18,6 +18,7 @@ async function bootstrap() {
     const schema = await (0, schema_1.createSchema)();
     const server = new server_1.ApolloServer({
         schema,
+        introspection: true,
         formatError: (formattedError) => {
             const { extensions, ...rest } = formattedError;
             const cleanExtensions = { ...extensions };
