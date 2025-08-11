@@ -1,0 +1,50 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id         String   @id @default(uuid())
+  name       String
+  email      String   @unique
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  created_rides Ride[]
+  subscriptions RideSubscription[]
+}
+
+model Ride {
+  id                      String   @id @default(uuid())
+  name                    String
+  start_date_registration DateTime
+  end_date_registration   DateTime
+  additional_information  String?
+  start_date              DateTime
+  start_place             String
+  participants_limit      Int?
+  created_at              DateTime @default(now())
+  updated_at              DateTime @updatedAt
+
+  creator_id    String
+  creator       User               @relation(fields: [creator_id], references: [id])
+  subscriptions RideSubscription[]
+}
+
+model RideSubscription {
+  id                String   @id @default(uuid())
+  ride_id           String
+  user_id           String
+  subscription_date DateTime
+  created_at        DateTime @default(now())
+  updated_at        DateTime @updatedAt
+
+  user User @relation(fields: [user_id], references: [id])
+  ride Ride @relation(fields: [ride_id], references: [id], onDelete: Cascade)
+}

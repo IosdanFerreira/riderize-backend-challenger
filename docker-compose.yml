@@ -1,0 +1,47 @@
+services:
+  app:
+    build: .
+    container_name: riderize_app
+    restart: unless-stopped
+    env_file: .env
+    ports:
+      - "4000:4000"
+      - "5555:5555"
+    volumes:
+      - .:/usr/src/app
+    depends_on:
+      - postgres
+      - redis
+    networks:
+      - riderize-network
+
+  postgres:
+    image: postgres:13
+    container_name: riderize_postgres
+    restart: unless-stopped
+    env_file: .env
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - riderize-network
+
+  redis:
+    image: redis:6
+    container_name: riderize_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - riderize-network
+
+volumes:
+  postgres_data:
+  redis_data:
+
+networks:
+  riderize-network:
+    driver: bridge

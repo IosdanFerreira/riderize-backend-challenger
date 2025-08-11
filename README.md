@@ -1,1 +1,0 @@
-# riderize-backend-challenger
