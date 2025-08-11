@@ -4,11 +4,6 @@ const not_found_error_1 = require("../../../../../shared/errors/not-found.error"
 const generate_pagination_utils_1 = require("../../../../../shared/utils/generate-pagination.utils");
 const ride_service_1 = require("../../ride.service");
 const validation_error_1 = require("../../../../../shared/errors/validation.error");
-jest.mock("../../../../../shared/utils/generate-pagination.utils", () => ({
-    Paginator: {
-        buildPagination: jest.fn(),
-    },
-}));
 describe("RideService unit tests", () => {
     let rideService;
     let rideRepository;
@@ -35,11 +30,22 @@ describe("RideService unit tests", () => {
             findManyByCreatorId: jest.fn(),
             findAllWithCount: jest.fn(),
         };
+        jest.spyOn(generate_pagination_utils_1.Paginator, "buildPagination").mockReturnValue({
+            pagination: {
+                total_items: 1,
+                total_pages: 1,
+                page: 1,
+                per_page: 10,
+                next_page: null,
+                prev_page: null,
+            },
+            items: [fakeRide],
+        });
         const redisClientMock = {
             get: jest.fn(),
             set: jest.fn(),
             del: jest.fn(),
-            // ... outros métodos se precisar
+            scan: jest.fn().mockResolvedValue(["0", []]),
         };
         rideService = new ride_service_1.RideService(rideRepository, redisClientMock);
         jest.clearAllMocks();

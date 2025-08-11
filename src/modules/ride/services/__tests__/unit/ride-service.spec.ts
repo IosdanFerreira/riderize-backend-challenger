@@ -7,12 +7,6 @@ import { RideService } from "../../ride.service";
 import { UpdateRideInput } from "../../../dto/update-ride.input.dto";
 import { ValidationError } from "../../../../../shared/errors/validation.error";
 
-jest.mock("../../../../../shared/utils/generate-pagination.utils", () => ({
-  Paginator: {
-    buildPagination: jest.fn(),
-  },
-}));
-
 describe("RideService unit tests", () => {
   let rideService: RideService;
   let rideRepository: jest.Mocked<RideRepository>;
@@ -42,13 +36,24 @@ describe("RideService unit tests", () => {
       findAllWithCount: jest.fn(),
     } as any;
 
+    jest.spyOn(Paginator, "buildPagination").mockReturnValue({
+      pagination: {
+        total_items: 1,
+        total_pages: 1,
+        page: 1,
+        per_page: 10,
+        next_page: null,
+        prev_page: null,
+      },
+      items: [fakeRide],
+    });
+
     const redisClientMock = {
       get: jest.fn(),
       set: jest.fn(),
       del: jest.fn(),
-      // ... outros métodos se precisar
+      scan: jest.fn().mockResolvedValue(["0", []]),
     };
-
     rideService = new RideService(rideRepository, redisClientMock as any);
     jest.clearAllMocks();
   });
