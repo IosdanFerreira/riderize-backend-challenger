@@ -54,13 +54,10 @@ cd riderize-backend-challenger
 - Cole as seguintes variáveis no arquivo
 
 ```env
-# Server
-# App
 PORT=4000
 ENV=dev
 JWT_SECRET=your_jwt_secret_here
 
-# Database
 POSTGRES_HOST=postgres
 POSTGRES_PORT=5432
 POSTGRES_USER=postgres
@@ -85,6 +82,11 @@ docker compose up --build
 
 1.  **Acesse a aplicação:**
 
-    Abra seu navegador e acesse `http://localhost:3000`.
+    Abra seu navegador e acesse `http://localhost:4000`.
 
 ---
+
+### Versão em produção
+
+1. Acesse: https://studio.apollographql.com/sandbox/explorer
+2. Utilize a url https://riderize-backend-challenger-production.up.railway.app
